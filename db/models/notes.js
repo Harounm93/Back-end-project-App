@@ -26,11 +26,32 @@ async function deleteHobbiesById(){
     `);
     return result.rows;
     }
+///////////Post new hobby into database
+const sqlStatementPost = `
+INSERT INTO mentor_notes (user_id, name, age, hobby) 
+VALUES ($1, $2, $3, $4) RETURNING *;
+`;
+async function postNewHobby({
+user_id,
+name,
+age,
+hobby
+}) {
+let values = [
+user_id,
+name,
+age,
+hobby
+];
+const result = await query(sqlStatementPost, values);
+console.log(result);
+}
 
 
 module.exports = {
 getHobbiesAll,
 getHobbiesUser,
-deleteHobbiesById
+deleteHobbiesById,
+postNewHobby
 
 }
